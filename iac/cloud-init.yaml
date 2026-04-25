@@ -1,0 +1,21 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - git
+  - python3
+
+users:
+  - name: ansible
+    groups: sudo
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIp+Wly026yjx0MN6fYx8cExouEf5dgSQV+rvOl17gRH ansible
+
+ssh_pwauth: false
+
+timezone: Europe/Madrid
+locale: es_ES.UTF-8
