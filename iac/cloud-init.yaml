@@ -1,12 +1,4 @@
 #cloud-config
-
-package_update: true
-package_upgrade: true
-
-packages:
-  - git
-  - python3
-
 users:
   - name: ansible
     groups: sudo
@@ -14,8 +6,35 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     ssh_authorized_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIp+Wly026yjx0MN6fYx8cExouEf5dgSQV+rvOl17gRH ansible
-
-ssh_pwauth: false
-
+package_update: true
+package_upgrade: true
+packages:
+  - git
+  - python3
+  - fail2ban
+  - ufw
 timezone: Europe/Madrid
 locale: es_ES.UTF-8
+write_files:
+  - path: /etc/ssh/sshd_config.d/ssh-hardening.conf
+    content: |
+      PermitRootLogin no
+      PasswordAuthentication no
+      Port 2222
+      KbdInteractiveAuthentication no
+      ChallengeResponseAuthentication no
+      MaxAuthTries 2
+      AllowTcpForwarding no
+      X11Forwarding no
+      AllowAgentForwarding no
+      AuthorizedKeysFile .ssh/authorized_keys
+      AllowUsers ansible
+runcmd:
+  - printf "[sshd]\nenabled = true\nport = ssh, 2222\nbanaction = iptables-multiport" > /etc/fail2ban/jail.local
+  - systemctl enable fail2ban
+  - ufw allow 2222
+  - ufw enable
+power_state:
+  mode: reboot
+  delay: now
+  condition: true
