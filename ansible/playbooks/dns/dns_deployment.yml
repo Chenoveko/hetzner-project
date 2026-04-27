@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Update /etc/hosts on CMS first
+  hosts: localhost
+  become: true
+  roles:
+    - dns
+
+- name: Update /etc/hosts on the rest of machines
+  hosts: linux
+  become: true
+  roles:
+    - dns

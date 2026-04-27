@@ -1,0 +1,11 @@
+[cluster]
+controlplane
+worker1
+worker2
+worker3
+
+[linux:children]
+cluster
+
+[linux]
+cms
