@@ -5,13 +5,13 @@
   become: true
 
   tasks:
-    - name: Install k3s in controlpanel
+    - name: Execute controlpanel_installation.yml
       include_role:
         name: k3s
         tasks_from: controlpanel_installation.yml
       when: "'controlpanels' in group_names"
 
-    - name: Install k3s in workers
+    - name: Execute worker_installation.yml 
       include_role:
         name: k3s
         tasks_from: worker_installation.yml
@@ -21,10 +21,10 @@
   hosts: cms
 
   tasks:
-    - name: Install k3s in workers
+    - name: Execute 
       include_role:
         name: k3s
-        tasks_from: worker_installation.yml
+        tasks_from: tools_installation.yml
 
    
 
