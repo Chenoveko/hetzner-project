@@ -1,21 +1,20 @@
 #SPDX-License-Identifier: MIT-0
 ---
-- name: Install k3s in controlpanel
-  hosts: controlpanel
+- name: Install k3s cluster
+  hosts: cluster
   become: true
+
   tasks:
-    - name: Execute k3s_installation.yml
-      ansible.builtin.include_role:
+    - name: Install k3s in controlpanel
+      include_role:
         name: k3s
         tasks_from: controlpanel_installation.yml
+      when: "'controlpanels' in group_names"
 
-- name: Install k3s in workers
-  hosts: workers
-  become: true
-  tasks:
-    - name: Execute k3s_installation.yml
-      ansible.builtin.include_role:
+    - name: Install k3s in workers
+      include_role:
         name: k3s
-        tasks_from: workers_installation.yml
+        tasks_from: worker_installation.yml
+      when: "'workers' in group_names"
 
 

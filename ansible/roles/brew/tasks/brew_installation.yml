@@ -1,0 +1,33 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Install Homebrew
+  ansible.builtin.shell: |
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  args:
+    creates: /home/linuxbrew/.linuxbrew/bin/brew
+
+- name: Add Homebrew to PATH
+  ansible.builtin.shell: |
+    echo >> /home/ansible/.bashrc
+    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/ansible/.bashrc
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+
+- name: Install Homebrew's dependencies
+  ansible.builtin.apt:
+    name: build-essential
+    state: present
+  become: true
+
+- name: Install gcc with Homebrew
+  community.general.homebrew:
+    name: gcc
+    state: present
+    update_homebrew: true
+
+- name: Get Homebrew version
+  ansible.builtin.command: /home/linuxbrew/.linuxbrew/bin/brew --version
+  register: brew_version
+
+- name: Show Homebrew version
+  ansible.builtin.debug:
+    msg: "{{ brew_version.stdout }}"

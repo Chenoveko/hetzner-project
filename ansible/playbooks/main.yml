@@ -3,3 +3,4 @@
 - import_playbook: general/update_deployment.yml
 - import_playbook: dns/dns_deployment.yml
 - import_playbook: k3s/k3s_deployment.yml
+- import_playbook: brew/brew_deployment.yml

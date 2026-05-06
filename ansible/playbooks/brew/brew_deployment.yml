@@ -1,0 +1,9 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Install Homebrew
+  hosts: cms
+  tasks:
+    - name: Execute brew_installation.yml
+      ansible.builtin.include_role:
+        name: homebrew
+        tasks_from: brew_installation.yml
