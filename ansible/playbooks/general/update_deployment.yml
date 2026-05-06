@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Update and upgrade packages
+  hosts: linux
+  become: true
+  tasks:
+    - name: Execute general_update.yml
+      ansible.builtin.include_role:
+        name: general
+        tasks_from: general_update.yml

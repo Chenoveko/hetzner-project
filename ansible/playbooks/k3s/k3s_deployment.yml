@@ -4,7 +4,7 @@
   hosts: controlpanel
   become: true
   tasks:
-    - name: Execute only k3s_installation.yml
+    - name: Execute k3s_installation.yml
       ansible.builtin.include_role:
         name: k3s
         tasks_from: k3s_installation.yml
