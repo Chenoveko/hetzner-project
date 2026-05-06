@@ -4,9 +4,8 @@ worker1
 worker2
 worker3
 
-[cms]
+[linux]
 cms
 
 [linux:children]
 cluster
-cms
