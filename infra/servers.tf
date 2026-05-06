@@ -55,3 +55,30 @@ resource "hcloud_server" "controlpanel" {
 
   depends_on = [hcloud_network_subnet.private]
 }
+
+resource "hcloud_server" "workers" {
+  for_each = var.cluster_servers
+
+  name         = "${var.project_name}-${each.key}"
+  server_type  = var.server_type
+  image        = var.server_image
+  location     = var.location
+  firewall_ids = [hcloud_firewall.nat.id]
+
+  network {
+    network_id = hcloud_network.main.id
+    ip         = each.value.private_ip
+  }
+
+  public_net {
+    ipv4_enabled = false
+    ipv6_enabled = false
+  }
+
+  user_data = templatefile("${path.module}/script/cloud-init.yml.tpl", {
+    ansible_public_key  = tls_private_key.ansible.public_key_openssh
+    network_gateway_ip  = var.network_gateway_ip
+  })
+
+  depends_on = [hcloud_network_subnet.private]
+}

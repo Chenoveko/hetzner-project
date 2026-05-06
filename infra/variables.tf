@@ -109,7 +109,5 @@ variable "cluster_servers" {
   }))
   default = {
     worker1 = { private_ip = "10.42.20.13" }
-    worker2 = { private_ip = "10.42.20.14" }
-    worker3 = { private_ip = "10.42.20.15" }
   }
 }

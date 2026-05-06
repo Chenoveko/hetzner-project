@@ -1,11 +1,12 @@
 [cluster]
-controlplane
+controlpanel
 worker1
 worker2
 worker3
 
+[cms]
+cms
+
 [linux:children]
 cluster
-
-[linux]
 cms
