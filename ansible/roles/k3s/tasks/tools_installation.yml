@@ -1,0 +1,16 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/k3s
+- name: Update Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+    
+- name: Install kubectl with Homebrew
+  community.general.homebrew:
+    name: kubectl
+    state: present
+
+- name: Install k9s with Homebrew
+  community.general.homebrew:
+    name: k9s
+    state: present

@@ -17,4 +17,15 @@
         tasks_from: worker_installation.yml
       when: "'workers' in group_names"
 
+- name: Install management tools in cms
+  hosts: cms
+
+  tasks:
+    - name: Install k3s in workers
+      include_role:
+        name: k3s
+        tasks_from: worker_installation.yml
+
+   
+
 

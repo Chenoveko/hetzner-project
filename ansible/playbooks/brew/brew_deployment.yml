@@ -5,5 +5,5 @@
   tasks:
     - name: Execute brew_installation.yml
       ansible.builtin.include_role:
-        name: homebrew
+        name: brew
         tasks_from: brew_installation.yml
