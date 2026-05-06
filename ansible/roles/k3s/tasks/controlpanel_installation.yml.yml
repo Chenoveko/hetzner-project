@@ -1,0 +1,27 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/k3s
+- name: Download script installation of k3s
+  ansible.builtin.get_url:
+    url: https://get.k3s.io
+    dest: /tmp/k3s_install.sh
+    mode: '0755'
+
+- name: Execute installation of k3s in controlpanels
+  ansible.builtin.command: /tmp/k3s_install.sh
+  args:
+    creates: /usr/local/bin/k3s
+
+- name: Read k3s token from controlpanel
+  ansible.builtin.slurp:
+    src: /var/lib/rancher/k3s/server/node-token
+  register: k3s_token_file
+
+- name: Set k3s token fact
+  ansible.builtin.set_fact:
+    k3s_token: "{{ k3s_token_file.content | b64decode }}"
+
+- name: Remove installation script of k3s
+  ansible.builtin.file:
+    path: /tmp/k3s_install.sh
+    state: absent

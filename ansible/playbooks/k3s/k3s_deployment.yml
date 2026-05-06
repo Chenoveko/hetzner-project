@@ -7,6 +7,15 @@
     - name: Execute k3s_installation.yml
       ansible.builtin.include_role:
         name: k3s
-        tasks_from: k3s_installation.yml
+        tasks_from: controlpanel_installation.yml
+
+- name: Install k3s in workers
+  hosts: workers
+  become: true
+  tasks:
+    - name: Execute k3s_installation.yml
+      ansible.builtin.include_role:
+        name: k3s
+        tasks_from: workers_installation.yml
 
 

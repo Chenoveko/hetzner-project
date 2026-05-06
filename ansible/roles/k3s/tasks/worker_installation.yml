@@ -7,11 +7,12 @@
     dest: /tmp/k3s_install.sh
     mode: '0755'
 
-- name: Execute installation of k3s
+- name: Install k3s agent on workers
   ansible.builtin.command: /tmp/k3s_install.sh
-  args:
-    creates: /usr/local/bin/k3s
- 
+  environment:
+    K3S_URL: "https://controlpanel:6443"
+    K3S_TOKEN: "{{ k3s_token }}"
+
 - name: Remove installation script of k3s
   ansible.builtin.file:
     path: /tmp/k3s_install.sh

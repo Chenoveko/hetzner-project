@@ -1,8 +1,14 @@
-[cluster]
+[controlpanels]
 controlpanel
+
+[workers]
 worker1
 worker2
 worker3
+
+[cluster:children]
+controlpanels
+workers
 
 [linux]
 cms
