@@ -11,8 +11,8 @@
 
 - name: Set Fangfrisch  configuration
   ansible.builtin.copy:
-    src: clamd.conf
-    dest: /etc/clamav/clamd.conf
+    src: fangfrisch.conf
+    dest: /etc/fangfrisch/fangfrisch.conf
     owner: root
     group: root
     mode: '0644'
