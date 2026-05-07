@@ -1,5 +1,14 @@
 #SPDX-License-Identifier: MIT-0
 ---
+- name: Create Fangfrisch home directory
+  become: true
+  ansible.builtin.file:
+    path: /var/lib/fangfrisch
+    state: directory
+    owner: clamav
+    group: clamav
+    mode: "0755"
+
 - name: Ensure Fangfrisch config directory exists
   ansible.builtin.file:
     path: /etc/fangfrisch
@@ -9,7 +18,7 @@
     mode: '0755'
   become: true
 
-- name: Set Fangfrisch  configuration
+- name: Set Fangfrisch configuration
   ansible.builtin.copy:
     src: fangfrisch.conf
     dest: /etc/fangfrisch/fangfrisch.conf
@@ -18,3 +27,37 @@
     mode: '0644'
     backup: true
   become: true
+
+- name: Initialize Fangfrisch database
+  become: true
+  become_user: clamav
+  environment:
+    HOME: /var/lib/fangfrisch
+  ansible.builtin.command:
+    cmd: fangfrisch --conf /etc/fangfrisch.conf initdb
+    creates: /var/lib/fangfrisch/db.sqlite
+
+- name: Configure Fangfrisch refresh cron
+  become: true
+  ansible.builtin.cron:
+    name: fangfrisch refresh
+    user: clamav
+    minute: "*/10"
+    job: 'sleep $((RANDOM \% 42)); /usr/bin/fangfrisch --conf /etc/fangfrisch.conf refresh'
+    env: false
+
+- name: Set HOME for clamav cron
+  become: true
+  ansible.builtin.cron:
+    name: HOME
+    user: clamav
+    env: true
+    job: /var/lib/fangfrisch
+
+- name: Set LOG_LEVEL for clamav cron
+  become: true
+  ansible.builtin.cron:
+    name: LOG_LEVEL
+    user: clamav
+    env: true
+    job: INFO
