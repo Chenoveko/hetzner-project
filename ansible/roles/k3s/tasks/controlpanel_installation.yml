@@ -7,8 +7,15 @@
     dest: /tmp/k3s_install.sh
     mode: '0755'
 
+- name: Check if k3s-agent-uninstall script exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s-agent-uninstall.sh
+  register: k3s_agent_uninstall
+
 - name: Execute installation of k3s in controlpanels
   ansible.builtin.command: /tmp/k3s_install.sh
+  environment:
+    INSTALL_K3S_EXEC: "--tls-san controlpanel"
   args:
     creates: /usr/local/bin/k3s
 

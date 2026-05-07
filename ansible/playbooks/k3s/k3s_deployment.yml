@@ -3,7 +3,6 @@
 - name: Install k3s cluster
   hosts: cluster
   become: true
-
   tasks:
     - name: Execute controlpanel_installation.yml
       include_role:
@@ -19,13 +18,16 @@
 
 - name: Install management tools in cms
   hosts: cms
-
   tasks:
-    - name: Execute 
+    - name: Execute tools_installation.yml
       include_role:
         name: k3s
         tasks_from: tools_installation.yml
 
-   
-
-
+- name: Configurate kubeconfig in cms
+  hosts: cms
+  tasks:
+    - name: Execute kubeconfig_configuration.yml
+      include_role:
+        name: k3s
+        tasks_from: kubeconfig_configuration.yml
