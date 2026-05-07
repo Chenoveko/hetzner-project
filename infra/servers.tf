@@ -65,7 +65,7 @@ resource "hcloud_server" "kubeadmin" {
 ############################
 #      Cluster 1 k3s       #
 ############################
-
+/*
 resource "hcloud_server" "controlplanes-clt-1" {
   for_each = var.controlplanes_clt_1_private_ip
 
