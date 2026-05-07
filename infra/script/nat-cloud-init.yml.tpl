@@ -1,5 +1,18 @@
 #cloud-config
 
+users:
+  - name: ansible
+    groups: sudo
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+    passwd: "$6$kmOnMk2fKWTrQgrd$fAN.celI2/ofFrEiCCt5WEQb0DENALCsD3fF3h7yW9SKRaP29Q06B3/EEe4fqZbuLmxL4Vqs/2Vt6RKcZpcS6."
+    ssh_authorized_keys:
+      - ${ansible_public_key}
+
+timezone: Europe/Madrid
+locale: es_ES.UTF-8
+
 write_files:
   - path: /usr/local/sbin/configure-nat.sh
     permissions: "0755"

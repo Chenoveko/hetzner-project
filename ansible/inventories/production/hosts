@@ -1,4 +1,10 @@
 ##################
+#    Routing     #
+##################
+[nat_hosts]
+nat
+
+##################
 #   Management   #
 ##################
 [cms_hosts]
@@ -55,3 +61,4 @@ cluster_2_workers
 [linux:children]
 management
 clusters
+nat_hosts

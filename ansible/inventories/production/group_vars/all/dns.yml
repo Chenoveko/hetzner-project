@@ -1,4 +1,7 @@
 dns_hosts:
+  - ip: 10.42.20.2
+    hostnames:
+      - nat
   - ip: 10.42.20.11
     hostnames:
       - cms
