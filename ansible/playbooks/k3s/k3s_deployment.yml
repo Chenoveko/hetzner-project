@@ -41,8 +41,8 @@
         tasks_from: worker_installation.yml
       when: "'cluster-2-workers' in group_names"
 
-- name: Install management tools in kubeadmin
-  hosts: kubeadmin
+- name: Install management tools in cms
+  hosts: cms
   tasks:
     - name: Execute tools_installation.yml
       include_role:
@@ -50,7 +50,7 @@
         tasks_from: tools_installation.yml
 
 - name: Configurate kubeconfig in kubeadmin
-  hosts: kubeadmin
+  hosts: cms
   tasks:
     - name: Execute kubeconfig_configuration.yml
       include_role:

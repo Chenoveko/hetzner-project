@@ -1,7 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 - name: Install Homebrew
-  hosts: kubeadmin
+  hosts: cms
   tasks:
     - name: Execute brew_installation.yml
       ansible.builtin.include_role:
