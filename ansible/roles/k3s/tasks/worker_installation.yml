@@ -7,6 +7,15 @@
     dest: /tmp/k3s_install.sh
     mode: '0755'
 
+- name: Check if k3s-uninstall script exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s-uninstall.sh
+  register: k3s_uninstall
+
+- name: Uninstall previous k3s server
+  ansible.builtin.command: /usr/local/bin/k3s-uninstall.sh
+  when: k3s_uninstall.stat.exists
+
 - name: Check if k3s-agent-uninstall script exists
   ansible.builtin.stat:
     path: /usr/local/bin/k3s-agent-uninstall.sh

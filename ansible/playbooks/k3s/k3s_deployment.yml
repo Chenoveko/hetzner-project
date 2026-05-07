@@ -49,7 +49,7 @@
         name: k3s
         tasks_from: tools_installation.yml
 
-- name: Configurate kubeconfig in kubeadmin
+- name: Configurate kubeconfig in cms
   hosts: cms
   tasks:
     - name: Execute kubeconfig_configuration.yml

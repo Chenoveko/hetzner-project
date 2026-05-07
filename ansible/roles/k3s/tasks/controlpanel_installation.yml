@@ -16,19 +16,19 @@
   ansible.builtin.command: /usr/local/bin/k3s-uninstall.sh
   when: k3s_uninstall.stat.exists
 
-- name: Gather hostname fact
-  ansible.builtin.setup:
-    gather_subset:
-      - "!all"
-      - "!min"
-      - "platform"
-    filter:
-      - ansible_hostname
+- name: Check if k3s-agent-uninstall script exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s-agent-uninstall.sh
+  register: k3s_agent_uninstall
+
+- name: Uninstall previous k3s agent
+  ansible.builtin.command: /usr/local/bin/k3s-agent-uninstall.sh
+  when: k3s_agent_uninstall.stat.exists
 
 - name: Execute installation of k3s in controlpanel
   ansible.builtin.command: /tmp/k3s_install.sh
   environment:
-    INSTALL_K3S_EXEC: "--tls-san {{ ansible_hostname }}"
+    INSTALL_K3S_EXEC: "--tls-san {{ inventory_hostname }}"
   args:
     creates: /usr/local/bin/k3s
 
