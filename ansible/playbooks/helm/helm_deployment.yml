@@ -5,5 +5,5 @@
   tasks:
     - name: Execute helm_installation.yml
       include_role:
-        name: k3s
+        name: helm
         tasks_from: helm_installation.yml

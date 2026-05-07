@@ -76,7 +76,7 @@ runcmd:
   - chown -R ansible:ansible /home/ansible/.ssh
   - rm -f /tmp/ansible_key.b64
   # 4) Update and install packages
-  - apt-get update && apt-get install -y git python3 fail2ban ufw pipx
+  - apt-get update && apt-get install -y git python3 fail2ban ufw pipx python3-kubernetes
   - chown -R ansible:ansible /home/ansible/
   - su - ansible -c "pipx install --include-deps ansible"
   - su - ansible -c "pipx ensurepath"

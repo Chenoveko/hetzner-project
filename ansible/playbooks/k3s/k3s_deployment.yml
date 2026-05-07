@@ -10,36 +10,36 @@
         tasks_from: controlpanel_installation.yml
 
 - name: Deploy k3s cluster 1
-  hosts: cluster-1
+  hosts: cluster_1
   become: true
   tasks:
     - name: Execute controlpanel_installation.yml
       include_role:
         name: k3s
         tasks_from: controlpanel_installation.yml
-      when: "'cluster-1-controlplanes' in group_names"
+      when: "'cluster_1_controlplanes' in group_names"
 
     - name: Execute worker_installation.yml 
       include_role:
         name: k3s
         tasks_from: worker_installation.yml
-      when: "'cluster-1-workers' in group_names"
+      when: "'cluster_1_workers' in group_names"
 
 - name: Deploy k3s cluster 2
-  hosts: cluster-2
+  hosts: cluster_2
   become: true
   tasks:
     - name: Execute controlpanel_installation.yml
       include_role:
         name: k3s
         tasks_from: controlpanel_installation.yml
-      when: "'cluster-2-controlplanes' in group_names"
+      when: "'cluster_2_controlplanes' in group_names"
 
     - name: Execute worker_installation.yml
       include_role:
         name: k3s
         tasks_from: worker_installation.yml
-      when: "'cluster-2-workers' in group_names"
+      when: "'cluster_2_workers' in group_names"
 
 - name: Install management tools in cms
   hosts: cms
