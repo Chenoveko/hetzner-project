@@ -25,15 +25,19 @@
   ansible.builtin.command: /usr/local/bin/k3s-agent-uninstall.sh
   when: k3s_agent_uninstall.stat.exists
 
+- name: Set controlplane group for this cluster
+  ansible.builtin.set_fact:
+    my_controlplane_group: "{{ 'cluster_1_controlplanes' if 'cluster_1_workers' in group_names else 'cluster_2_controlplanes' }}"
+
 - name: Show k3s token
   ansible.builtin.debug:
-    msg: "K3S_TOKEN={{ hostvars[groups['controlpanels'][0]].k3s_token }}"
+    msg: "K3S_TOKEN={{ hostvars[groups[my_controlplane_group][0]].k3s_token }}"
 
 - name: Install k3s agent on workers
   ansible.builtin.command: /tmp/k3s_install.sh
   environment:
-    K3S_URL: "https://controlpanel:6443"
-    K3S_TOKEN: "{{ hostvars[groups['controlpanels'][0]].k3s_token }}"
+    K3S_URL: "https://{{ groups[my_controlplane_group][0] }}:6443"
+    K3S_TOKEN: "{{ hostvars[groups[my_controlplane_group][0]].k3s_token }}"
 
 - name: Remove installation script of k3s
   ansible.builtin.file:

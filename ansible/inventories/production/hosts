@@ -1,56 +1,56 @@
 ##################
 #   Management   #
 ##################
-[cms]
+[cms_hosts]
 cms
 
-[kubeadmin]
+[kubeadmin_hosts]
 kubeadmin
 
 [management:children]
-cms
-kubeadmin
+cms_hosts
+kubeadmin_hosts
 
 ##################
 #   Cluster 1    #
 ##################
-[cluster-1-controlplanes]
+[cluster_1_controlplanes]
 controlplane-1
 
-[cluster-1-workers]
+[cluster_1_workers]
 worker-1
 
-[cluster-1:children]
-cluster-1-controlplanes
-cluster-1-workers
+[cluster_1:children]
+cluster_1_controlplanes
+cluster_1_workers
 
 ##################
 #   Cluster 2    #
 ##################
-[cluster-2-controlplanes]
+[cluster_2_controlplanes]
 controlplane-a
 
-[cluster-2-workers]
+[cluster_2_workers]
 worker-a
 
-[cluster-2:children]
-cluster-2-controlplanes
-cluster-2-workers
+[cluster_2:children]
+cluster_2_controlplanes
+cluster_2_workers
 
 ##################
 # Global Groups  #
 ##################
 [clusters:children]
-cluster-1
-cluster-2
+cluster_1
+cluster_2
 
 [controlplanes:children]
-cluster-1-controlplanes
-cluster-2-controlplanes
+cluster_1_controlplanes
+cluster_2_controlplanes
 
 [workers:children]
-cluster-1-workers
-cluster-2-workers
+cluster_1_workers
+cluster_2_workers
 
 [linux:children]
 management

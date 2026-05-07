@@ -56,10 +56,12 @@ runcmd:
   - ip route add default via 10.42.0.1 dev enp7s0 || true
   # 2) DNS
   - systemctl restart systemd-resolved
-  # 3) Hardening
+  # 3) Update and install packages
+  - apt-get update && apt-get install -y fail2ban ufw
+  # 4) Hardening
   - printf "[sshd]\nenabled = true\nport = ssh, 2222\nbanaction = iptables-multiport" > /etc/fail2ban/jail.local
   - systemctl enable fail2ban
   - ufw allow 2222
   - ufw enable
-  # 4) Restart SSH server
+  # 5) Restart SSH server
   - systemctl restart ssh
