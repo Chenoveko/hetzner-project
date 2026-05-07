@@ -1,0 +1,21 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Ensure Fangfrisch config directory exists
+  ansible.builtin.file:
+    path: /etc/fangfrisch
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: Set Fangfrisch  configuration
+  ansible.builtin.copy:
+    src: clamd.conf
+    dest: /etc/clamav/clamd.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+  become: true
+  notify: Restart clamav-daemon and daemon-reload

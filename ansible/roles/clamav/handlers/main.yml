@@ -6,3 +6,9 @@
     state: restarted
     daemon_reload: true
     name: clamav-daemon
+
+- name: Restart clamav-clamonacc and daemon-reload
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: clamav-clamonacc

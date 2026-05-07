@@ -11,11 +11,36 @@
   become: true
   notify: Restart clamav-daemon and daemon-reload
 
-- name: Add ClamAV clamonacc configuration to clamd.conf
+- name: Configure clamd on-access realtime config
   ansible.builtin.blockinfile:
-    path: /etc/clamav/clamd.conf
-    marker: "# {mark} ANSIBLE MANAGED CLAMONACC CONFIG"
-    block: "{{ lookup('ansible.builtin.file', role_path + '/files/clamonacc.conf') }}"
-    backup: true
+    path: /etc/clamd.d/scan.conf
+    marker: "# {mark} ANSIBLE CLAMAV REALTIME"
+    block: "{{ lookup('ansible.builtin.file', 'clamd-onaccess.conf') }}"
+  become: true
+
+- name: Create clamonacc systemd service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/clamav-clamonacc.service
+    mode: '0644'
+    content: |
+      [Unit]
+      Description=ClamAV On-Access Scanner
+      Documentation=man:clamonacc(8)
+      Requires=clamav-daemon.service
+      After=clamav-daemon.service
+
+      [Service]
+      Type=simple
+      User=root
+      ExecStart=/usr/sbin/clamonacc -F --fdpass --log=/var/log/clamav/clamonacc.log
+      Restart=on-failure
+
+      [Install]
+      WantedBy=multi-user.target
   become: true
   notify: Restart clamav-daemon and daemon-reload
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
