@@ -1,0 +1,9 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Install helm in cms
+  hosts: cms
+  tasks:
+    - name: Execute helm_installation.yml
+      include_role:
+        name: k3s
+        tasks_from: helm_installation.yml

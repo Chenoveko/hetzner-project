@@ -4,13 +4,16 @@ dns_hosts:
       - cms
   - ip: 10.42.20.12
     hostnames:
-      - controlpanel
-  - ip: 10.42.20.13
+      - kubeadmin
+  - ip: 10.42.20.20
     hostnames:
-      - worker1
-  - ip: 10.42.20.14
+      - controlplane-1
+  - ip: 10.42.20.21
     hostnames:
-      - worker2
-  - ip: 10.42.20.14
+      - worker-1
+  - ip: 10.42.20.30
     hostnames:
-      - worker3
+      - controlplane-a
+  - ip: 10.42.20.31
+    hostnames:
+      - worker-a

@@ -7,10 +7,24 @@
     creates: /home/linuxbrew/.linuxbrew/bin/brew
 
 - name: Add Homebrew to PATH
-  ansible.builtin.shell: |
-    echo >> /home/ansible/.bashrc
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/ansible/.bashrc
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+  ansible.builtin.blockinfile:
+    path: /home/ansible/.bashrc
+    marker: "# {mark} HOMEBREW PATH"
+    block: |
+      eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
+
+- name: Ensure .bash_profile sources .bashrc on login
+  ansible.builtin.blockinfile:
+    path: /home/ansible/.bash_profile
+    create: true
+    owner: ansible
+    group: ansible
+    mode: '0644'
+    marker: "# {mark} SOURCE BASHRC"
+    block: |
+      if [ -f "$HOME/.bashrc" ]; then
+          . "$HOME/.bashrc"
+      fi
 
 - name: Install Homebrew's dependencies
   ansible.builtin.apt:

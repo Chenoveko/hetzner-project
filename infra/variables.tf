@@ -91,23 +91,68 @@ variable "nat_gateway_image" {
   default = "ubuntu-24.04"
 }
 
+##################
+#   Management   #
+##################
+
 variable "cms_private_ip" {
   type    = string
   default = "10.42.20.11"
 }
 
-variable "controlpanel_private_ip" {
+variable "kubeadmin_private_ip" {
   type    = string
   default = "10.42.20.12"
 }
 
-variable "cluster_servers" {
-  description = "Map of cluster servers with their private IPs"
+##################
+#   Cluster 1    #
+##################
+
+variable "controlplanes_clt_1_private_ip" {
+  description = "Map of controlplanes clt 1 with their private IPs"
   type = map(object({
     private_ip = string
     location   = optional(string)
   }))
   default = {
-    worker1 = { private_ip = "10.42.20.13" }
+    worker1 = { private_ip = "10.42.20.20" }
+  }
+}
+
+variable "workers_clt_1_private_ip" {
+  description = "Map of workers clt 1 with their private IPs"
+  type = map(object({
+    private_ip = string
+    location   = optional(string)
+  }))
+  default = {
+    worker1 = { private_ip = "10.42.20.21" }
+  }
+}
+
+##################
+#   Cluster 2    #
+##################
+
+variable "controlplanes_clt_2_private_ip" {
+  description = "Map of controlplanes clt 2 with their private IPs"
+  type = map(object({
+    private_ip = string
+    location   = optional(string)
+  }))
+  default = {
+    worker1 = { private_ip = "10.42.20.30" }
+  }
+}
+
+variable "workers_clt_2_private_ip" {
+  description = "Map of workers clt 2 with their private IPs"
+  type = map(object({
+    private_ip = string
+    location   = optional(string)
+  }))
+  default = {
+    worker1 = { private_ip = "10.42.20.31" }
   }
 }

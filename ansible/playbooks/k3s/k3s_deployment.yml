@@ -1,31 +1,56 @@
 #SPDX-License-Identifier: MIT-0
 ---
-- name: Install k3s cluster
-  hosts: cluster
+- name: Deploy k3s kubeadmin
+  hosts: kubeadmin
   become: true
   tasks:
     - name: Execute controlpanel_installation.yml
       include_role:
         name: k3s
         tasks_from: controlpanel_installation.yml
-      when: "'controlpanels' in group_names"
+
+- name: Deploy k3s cluster 1
+  hosts: cluster-1
+  become: true
+  tasks:
+    - name: Execute controlpanel_installation.yml
+      include_role:
+        name: k3s
+        tasks_from: controlpanel_installation.yml
+      when: "'cluster-1-controlplanes' in group_names"
 
     - name: Execute worker_installation.yml 
       include_role:
         name: k3s
         tasks_from: worker_installation.yml
-      when: "'workers' in group_names"
+      when: "'cluster-1-workers' in group_names"
 
-- name: Install management tools in cms
-  hosts: cms
+- name: Deploy k3s cluster 2
+  hosts: cluster-2
+  become: true
+  tasks:
+    - name: Execute controlpanel_installation.yml
+      include_role:
+        name: k3s
+        tasks_from: controlpanel_installation.yml
+      when: "'cluster-2-controlplanes' in group_names"
+
+    - name: Execute worker_installation.yml
+      include_role:
+        name: k3s
+        tasks_from: worker_installation.yml
+      when: "'cluster-2-workers' in group_names"
+
+- name: Install management tools in kubeadmin
+  hosts: kubeadmin
   tasks:
     - name: Execute tools_installation.yml
       include_role:
         name: k3s
         tasks_from: tools_installation.yml
 
-- name: Configurate kubeconfig in cms
-  hosts: cms
+- name: Configurate kubeconfig in kubeadmin
+  hosts: kubeadmin
   tasks:
     - name: Execute kubeconfig_configuration.yml
       include_role:

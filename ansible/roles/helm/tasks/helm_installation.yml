@@ -1,0 +1,11 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/k3s
+- name: Update Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+
+- name: Install Helm with Homebrew
+  community.general.homebrew:
+    name: helm
+    state: present
