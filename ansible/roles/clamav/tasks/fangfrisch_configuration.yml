@@ -18,4 +18,3 @@
     mode: '0644'
     backup: true
   become: true
-  notify: Restart clamav-daemon and daemon-reload
