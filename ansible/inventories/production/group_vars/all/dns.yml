@@ -1,19 +1,19 @@
 dns_hosts:
   - ip: 10.42.20.11
     hostnames:
-      - cms
+      - dev-cms
   - ip: 10.42.20.12
     hostnames:
-      - kubeadmin
+      - dev-kubeadmin
   - ip: 10.42.20.20
     hostnames:
-      - controlplane-1
+      - dev-controlplane-1
   - ip: 10.42.20.21
     hostnames:
-      - worker-1
+      - dev-worker-1
   - ip: 10.42.20.30
     hostnames:
-      - controlplane-a
+      - dev-controlplane-a
   - ip: 10.42.20.31
     hostnames:
-      - worker-a
+      - dev-worker-a

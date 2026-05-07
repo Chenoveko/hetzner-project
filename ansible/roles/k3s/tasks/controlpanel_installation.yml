@@ -16,10 +16,19 @@
   ansible.builtin.command: /usr/local/bin/k3s-uninstall.sh
   when: k3s_uninstall.stat.exists
 
-- name: Execute installation of k3s in controlpanels
+- name: Gather hostname fact
+  ansible.builtin.setup:
+    gather_subset:
+      - "!all"
+      - "!min"
+      - "platform"
+    filter:
+      - ansible_hostname
+
+- name: Execute installation of k3s in controlpanel
   ansible.builtin.command: /tmp/k3s_install.sh
   environment:
-    INSTALL_K3S_EXEC: "--tls-san controlpanel"
+    INSTALL_K3S_EXEC: "--tls-san {{ ansible_hostname }}"
   args:
     creates: /usr/local/bin/k3s
 
