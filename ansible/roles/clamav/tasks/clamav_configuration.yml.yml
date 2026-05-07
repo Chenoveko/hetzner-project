@@ -13,7 +13,7 @@
 
 - name: Configure clamd on-access realtime config
   ansible.builtin.blockinfile:
-    path: /etc/clamd.d/scan.conf
+    path: /etc/clamav/clamd.conf
     marker: "# {mark} ANSIBLE CLAMAV REALTIME"
     block: "{{ lookup('ansible.builtin.file', 'clamd-onaccess.conf') }}"
   become: true
