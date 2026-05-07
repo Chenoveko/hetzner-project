@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for clamav
+- name: Restart clamav-daemon and daemon-reload
+  ansible.builtin.systemd_service:
+    state: restarted
+    daemon_reload: true
+    name: clamav-daemon

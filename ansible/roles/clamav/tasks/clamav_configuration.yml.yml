@@ -1,0 +1,21 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Set ClamAV clamd configuration
+  ansible.builtin.copy:
+    src: clamd.conf
+    dest: /etc/clamav/clamd.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: true
+  become: true
+  notify: Restart clamav-daemon and daemon-reload
+
+- name: Add ClamAV clamonacc configuration to clamd.conf
+  ansible.builtin.blockinfile:
+    path: /etc/clamav/clamd.conf
+    marker: "# {mark} ANSIBLE MANAGED CLAMONACC CONFIG"
+    block: "{{ lookup('ansible.builtin.file', role_path + '/files/clamonacc.conf') }}"
+    backup: true
+  become: true
+  notify: Restart clamav-daemon and daemon-reload

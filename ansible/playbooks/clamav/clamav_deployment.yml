@@ -1,0 +1,17 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: Install ClamAV
+  hosts: linux
+  tasks:
+    - name: Execute clamav_installation.yml
+      include_role:
+        name: clamav
+        tasks_from: clamav_installation.yml
+
+- name: Configure ClamAV
+  hosts: linux
+  tasks:
+    - name: Execute clamav_configuration.yml
+      include_role:
+        name: clamav
+        tasks_from: clamav_configuration.yml
