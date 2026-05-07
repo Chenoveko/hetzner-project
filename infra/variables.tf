@@ -110,7 +110,7 @@ variable "kubeadmin_private_ip" {
 ##################
 
 variable "controlplanes_clt_1_private_ip" {
-  description = "Map of controlplanes clt 1 with their private IPs"
+  description = "Map of controlplanes from cluster 1 with their private IPs"
   type = map(object({
     private_ip = string
     location   = optional(string)
@@ -121,7 +121,7 @@ variable "controlplanes_clt_1_private_ip" {
 }
 
 variable "workers_clt_1_private_ip" {
-  description = "Map of workers clt 1 with their private IPs"
+  description = "Map of workers from cluster 1 with their private IPs"
   type = map(object({
     private_ip = string
     location   = optional(string)
@@ -136,7 +136,7 @@ variable "workers_clt_1_private_ip" {
 ##################
 
 variable "controlplanes_clt_2_private_ip" {
-  description = "Map of controlplanes clt 2 with their private IPs"
+  description = "Map of controlplanes from cluster 2 with their private IPs"
   type = map(object({
     private_ip = string
     location   = optional(string)
@@ -147,7 +147,7 @@ variable "controlplanes_clt_2_private_ip" {
 }
 
 variable "workers_clt_2_private_ip" {
-  description = "Map of workers clt 2 with their private IPs"
+  description = "Map of workers from cluster 2 with their private IPs"
   type = map(object({
     private_ip = string
     location   = optional(string)

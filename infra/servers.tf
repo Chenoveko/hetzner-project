@@ -34,6 +34,7 @@ resource "hcloud_server" "cms" {
 #        kubeadmin         #
 ############################
 
+/*
 resource "hcloud_server" "kubeadmin" {
   name         = "${var.project_name}-kubeadmin"
   server_type  = var.server_type
@@ -59,6 +60,7 @@ resource "hcloud_server" "kubeadmin" {
 
   depends_on = [hcloud_network_subnet.private]
 }
+*/
 
 ############################
 #      Cluster 1 k3s       #
