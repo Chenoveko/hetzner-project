@@ -116,7 +116,7 @@ variable "controlplanes_clt_1_private_ip" {
     location   = optional(string)
   }))
   default = {
-    worker1 = { private_ip = "10.42.20.20" }
+    controlplane-1 = { private_ip = "10.42.20.20" }
   }
 }
 
@@ -127,7 +127,7 @@ variable "workers_clt_1_private_ip" {
     location   = optional(string)
   }))
   default = {
-    worker1 = { private_ip = "10.42.20.21" }
+    worker-1 = { private_ip = "10.42.20.21" }
   }
 }
 
@@ -142,7 +142,7 @@ variable "controlplanes_clt_2_private_ip" {
     location   = optional(string)
   }))
   default = {
-    worker1 = { private_ip = "10.42.20.30" }
+    controlplane-a = { private_ip = "10.42.20.30" }
   }
 }
 
@@ -153,6 +153,6 @@ variable "workers_clt_2_private_ip" {
     location   = optional(string)
   }))
   default = {
-    worker1 = { private_ip = "10.42.20.31" }
+    worker-a = { private_ip = "10.42.20.31" }
   }
 }
